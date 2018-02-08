@@ -33,6 +33,7 @@
 <script>
 import setting from './setting'
 import result from '@/components/result'
+import web from '@/web'
 
 export default {
   data () {
@@ -54,20 +55,35 @@ export default {
     submit () {
       if (this.result) {
         var result = Number(eval(this.expression.join('')))
+        var is_correct = false;
         if (Number(this.result) === result) {
+          is_correct = true
+          this.rates.correct_rate += 1
+
           this.$message({
             message: '答对了',
             type: 'success'
           })
-          this.rates.correct_rate += 1
-          this.generate()
         } else {
           this.rates.wrong_rate += 1
           this.$message.error('答错了')
         }
+        
+        var question = {
+          kind: 'math',
+          question: this.expression.join(' '),
+          answer: this.result,
+          result: result,
+          is_correct: is_correct
+        }
+        web.create(question)  
+
+        if (is_correct) {
+          this.generate()
+          this.result = null  
+        }
       }
       this.$refs['result'].focus()
-      this.result = null
     },
     generate () {
       var expression = []

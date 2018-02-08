@@ -33,6 +33,7 @@
 <script>
 import setting from './setting'
 import result from '@/components/result'
+import web from '@/web'
 
 export default {
   data () {
@@ -53,21 +54,34 @@ export default {
   },
   methods: {
     submit () {
+      var is_correct = false;
       var test = this.right.every( (char) => {
         return this.answer.includes(char)
       })
 
       if (test && this.answer.length === this.right.length) {
+        is_correct = true
+        this.rates.correct_rate += 1
         this.$message({
           message: '答对了',
           type: 'success'
         })
-        this.rates.correct_rate += 1
-        this.answer = []
-        this.generate()
       } else {
         this.rates.wrong_rate += 1
         this.$message.error('答错了')
+      }
+      
+      var question = {
+        kind: 'pinyin',
+        question: this.left.join(' '),
+        answer: this.right.join(' '),
+        result: this.answer.join(' '),
+        is_correct: is_correct
+      }
+      web.create(question)  
+      if (is_correct) {
+        this.answer = []
+        this.generate()
       }
     },
     generate () {
