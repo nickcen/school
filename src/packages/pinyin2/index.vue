@@ -70,7 +70,7 @@ export default {
       }
       
       var question = {
-        kind: 'pinyin2',
+        kind: 2,
         question: this.char,
         answer: this.answer,
         result: this.result,

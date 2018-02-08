@@ -72,7 +72,7 @@ export default {
       }
       
       var question = {
-        kind: 'pinyin1',
+        kind: 1,
         question: this.questions.join(' '),
         answer: this.answer.join(' '),
         result: this.result.join(' '),

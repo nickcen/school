@@ -69,7 +69,7 @@ export default {
           this.$message.error('答错了')
         }
         var question = {
-          kind: 'math1',
+          kind: 0,
           question: this.expression.join(' '),
           answer: this.answer,
           result: result,

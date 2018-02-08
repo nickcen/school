@@ -1,11 +1,14 @@
 <template>
   <div>
-    <div id="myChart" style="width:1024px;height:600px"/>
+    <div id="chart0" style="width:640px;height:480px"/>
+    <div id="chart1" style="width:640px;height:480px"/>
+    <div id="chart2" style="width:640px;height:480px"/>
   </div>
 </template>
 
 <script>
 require('echarts/lib/chart/line')
+require('echarts/lib/chart/bar')
 require('echarts/lib/component/polar')
 
 import web from '@/web'
@@ -15,110 +18,118 @@ var moment = require('moment')
 export default {
   data: function () {
     return {
-      options: {
-        color: ['#61a0a8', '#91c7ae', '#749f83', '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
-        tooltip : {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross',
-            label: {
-              backgroundColor: '#6a7985'
-            }
-          }
-        },
-        xAxis: {
-          type: 'category',
-          boundaryGap : false,
-          data: []
-        },
-        legend: {
-          data: ['数学', '声母，韵母', '写拼音']
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [{
-          name: '数学',
-          stack: '总量',
-          data: [],
-          type: 'line',
-          areaStyle: {normal: {}},
-          smooth: true
-        }, {
-          name: '声母，韵母',
-          stack: '总量',
-          data: [],
-          type: 'line',
-          areaStyle: {normal: {}},
-          smooth: true
-        }, {
-          name: '写拼音',
-          stack: '总量',
-          data: [],
-          type: 'line',
-          areaStyle: {normal: {}},
-          smooth: true
-        }]
-      }
+
     }
   },
   mounted () {
-    let myChart = this.$echarts.init(document.getElementById('myChart'))
+    var options = [
+    {
+      title: {
+        text: '数学'
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [{
+        data: [],
+        type: 'line',
+        label: {
+          normal: {
+            show: true,
+            position: 'top'
+          }
+        },
+        smooth: true
+      }]
+    },
+    {
+      title: {
+        text: '声母，韵母'
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [{
+        data: [],
+        type: 'line',
+        label: {
+          normal: {
+            show: true,
+            position: 'top'
+          }
+        },
+        smooth: true
+      }]
+    },
+    {
+      title: {
+        text: '写拼音'
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [{
+        data: [],
+        type: 'line',
+        label: {
+          normal: {
+            show: true,
+            position: 'top'
+          }
+        },
+        smooth: true
+      }]
+    }
+    ]
+
+    let chars = []
+    chars[0] = this.$echarts.init(document.getElementById('chart0'), 'light')
+    chars[1] = this.$echarts.init(document.getElementById('chart1'), 'light')
+    chars[2] = this.$echarts.init(document.getElementById('chart2'), 'light')
 
     var tomorrow = moment().add(1, 'days')
-    var one_month_ago = moment().subtract(1, 'months')
+    var one_month_ago = moment().subtract(14, 'days')
 
     web.list(one_month_ago.format("YYYY-MM-DD"), tomorrow.format("YYYY-MM-DD"), ( response ) => {
       var dates = this.getDateArray(one_month_ago, tomorrow)
-      
-      var maths = {}
-      var pinyins1 = {}
-      var pinyins2 = {}
-      var curr = null
+
+      var datas = [{}, {}, {}]
 
       response.data.data.forEach( (value) => {
-        if (value.kind == 'math1'){
-          curr = maths
-        } else if (value.kind == 'pinyin1') {
-          curr = pinyins1
-        } else  {
-          curr = pinyins2
-        }
+        var curr = datas[value.kind]
         if (curr[value.date]) {
           curr[value.date] += 1
         } else {
           curr[value.date] = 1
         }
       })
-      
-      dates.forEach( (date) => {
-        var val = maths[date]
 
-        if (val) {
-          this.options.series[0].data.push(val)
-        } else {
-          this.options.series[0].data.push(0)
-        }
+      for (var i = 0; i < 3; i++){
+        dates.forEach( (date) => {
+          var val = datas[i][date]
 
-        val = pinyins1[date]
+          if (val) {
+            options[i].series[0].data.push(val)
+          } else {
+            options[i].series[0].data.push(0)
+          }
+        })
 
-        if (val) {
-          this.options.series[1].data.push(val)
-        } else {
-          this.options.series[1].data.push(0)
-        }
-
-        val = pinyins2[date]
-
-        if (val) {
-          this.options.series[2].data.push(val)
-        } else {
-          this.options.series[2].data.push(0)
-        }
-      })
-
-      this.options.xAxis.data = dates
-      myChart.setOption(this.options)
+        options[i].xAxis.data = dates
+        chars[i].setOption(options[i])
+      }
     })
   },
   methods: {
