@@ -13,7 +13,7 @@
       <el-form :model="form" label-width="80px">
         <el-form-item>
           <el-checkbox-group v-model="answer">
-            <el-checkbox v-for="val in questions" :label='val' :key="val"></el-checkbox>
+            <el-checkbox v-for="val in questions" :label='val' :key="val" border></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item>
@@ -109,3 +109,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+span.el-checkbox__label {
+  font-size: 60px;
+}
+</style>
