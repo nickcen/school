@@ -6,6 +6,7 @@ import math from '@/packages/math/index'
 import pinyin from '@/packages/pinyin/index'
 import pinyin2 from '@/packages/pinyin2/index'
 import chart from '@/packages/chart/index'
+import report from '@/packages/report/index'
 
 Vue.use(Router)
 
@@ -22,6 +23,9 @@ export default new Router({
   },
   {
     path: '/chart', component: chart
+  },
+  {
+    path: '/report', component: report
   }
   ]
 })

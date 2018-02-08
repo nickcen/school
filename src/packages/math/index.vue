@@ -98,6 +98,7 @@ export default {
       }
 
       this.expression = expression
+      this.$refs['answer'].focus()
     }
   },
   components: {

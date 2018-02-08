@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 export default{
-  list (from_date, to_date, cb, fb) {
-    axios.get('/api/questions', {params: {from_date: from_date, to_date: to_date}})
+  list (params, cb, fb) {
+    axios.get('/api/questions', {params: params})
     .then( (response) => {
       if (cb) {
         cb(response)
