@@ -12,6 +12,8 @@
       </div>
       <template>
         <el-table :data="maths" style="width: 100%" :row-class-name="tableRowClassName">
+          <el-table-column type="index" width="50">
+          </el-table-column>
           <el-table-column prop="question" label="题目">
           </el-table-column>
           <el-table-column prop="answer" label="回答">
@@ -27,6 +29,8 @@
       </div>
       <template>
         <el-table :data="pinyin1s" style="width: 100%" :row-class-name="tableRowClassName">
+          <el-table-column type="index" width="50">
+          </el-table-column>
           <el-table-column prop="question" label="题目">
           </el-table-column>
           <el-table-column prop="answer" label="回答">
@@ -42,6 +46,8 @@
       </div>
       <template>
         <el-table :data="pinyin2s" style="width: 100%" :row-class-name="tableRowClassName">
+          <el-table-column type="index" width="50">
+          </el-table-column>
           <el-table-column prop="question" label="题目">
           </el-table-column>
           <el-table-column prop="answer" label="回答">
