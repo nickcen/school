@@ -36,7 +36,7 @@ export default {
       },
       series: [{
         data: [],
-        type: 'line',
+        type: 'bar',
         label: {
           normal: {
             show: true,
@@ -59,7 +59,7 @@ export default {
       },
       series: [{
         data: [],
-        type: 'line',
+        type: 'bar',
         label: {
           normal: {
             show: true,
@@ -82,7 +82,7 @@ export default {
       },
       series: [{
         data: [],
-        type: 'line',
+        type: 'bar',
         label: {
           normal: {
             show: true,
