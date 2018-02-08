@@ -7,12 +7,14 @@ import App from './App'
 import router from './router'
 import config from './config'
 import axios from 'axios'
+import echarts from 'echarts'
 
 Vue.use(ElementUI)
+Vue.prototype.$echarts = echarts
 
-axios.defaults.baseURL = config.server_host;
+axios.defaults.baseURL = config.server_host
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 /* eslint-disable no-new */
 new Vue({

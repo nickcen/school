@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     submit () {
-      var is_correct = false;
+      var is_correct = false
       var test = this.right.every( (char) => {
         return this.answer.includes(char)
       })
@@ -78,7 +78,7 @@ export default {
         result: this.answer.join(' '),
         is_correct: is_correct
       }
-      web.create(question)  
+      web.create(question)
       if (is_correct) {
         this.answer = []
         this.generate()

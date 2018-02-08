@@ -55,7 +55,7 @@ export default {
     submit () {
       if (this.result) {
         var result = Number(eval(this.expression.join('')))
-        var is_correct = false;
+        var is_correct = false
         if (Number(this.result) === result) {
           is_correct = true
           this.rates.correct_rate += 1
@@ -68,7 +68,6 @@ export default {
           this.rates.wrong_rate += 1
           this.$message.error('答错了')
         }
-        
         var question = {
           kind: 'math',
           question: this.expression.join(' '),
@@ -76,11 +75,11 @@ export default {
           result: result,
           is_correct: is_correct
         }
-        web.create(question)  
+        web.create(question)
 
         if (is_correct) {
           this.generate()
-          this.result = null  
+          this.result = null
         }
       }
       this.$refs['result'].focus()
