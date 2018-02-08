@@ -10,10 +10,11 @@
       <div slot="header" class="clearfix">
         <span>题目</span>
       </div>
-      <el-form :model="form" label-width="80px" :inline="true">
+      <el-form :model="form" label-width="80px">
         <el-form-item>
-          <el-transfer :data="left" v-model="right" :titles="['声母', '韵母']">
-          </el-transfer>
+          <el-checkbox-group v-model="right">
+            <el-checkbox v-for="val in left" :label='val' :key="val"></el-checkbox>
+          </el-checkbox-group>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submit">回答</el-button>
@@ -85,9 +86,7 @@ export default {
         }
       }
 
-      this.left = left.map(function (c) {
-        return {key: c, value: c}
-      })
+      this.left = left
       this.right = []
     }
   },
