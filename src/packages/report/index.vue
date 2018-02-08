@@ -64,7 +64,7 @@ export default {
     var tomorrow = moment().add(1, 'days')
     var one_month_ago = moment().subtract(1, 'months')
 
-    web.list(one_month_ago.format("YYYY-MM-DD"), today.format("YYYY-MM-DD"), ( response ) => {
+    web.list(one_month_ago.format("YYYY-MM-DD"), tomorrow.format("YYYY-MM-DD"), ( response ) => {
       var dates = this.getDateArray(one_month_ago, tomorrow)
       
       var maths = {}
