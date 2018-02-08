@@ -1,23 +1,11 @@
 <template>
   <div>
-    <el-row>
-      <el-col :span="12">
-        <el-card>
-          <div slot="header" class="clearfix">
-            <span>难度</span>
-          </div>
-          <setting :setting="form" @submit="generate"/>
-        </el-card>
-      </el-col>
-      <el-col :span="12">
-        <el-card>
-          <div slot="header" class="clearfix">
-            <span>成绩</span>
-          </div>
-          <result :rates="rates"/>
-        </el-card>
-      </el-col>
-    </el-row>
+    <el-card>
+      <div slot="header" class="clearfix">
+        <span>难度</span>
+      </div>
+      <setting :setting="form" @submit="generate"/>
+    </el-card>
     <el-card>
       <div slot="header" class="clearfix">
         <span>题目</span>
@@ -31,6 +19,12 @@
           <el-button type="primary" @click="submit">回答</el-button>
         </el-form-item>
       </el-form>
+    </el-card>
+    <el-card>
+      <div slot="header" class="clearfix">
+        <span>成绩</span>
+      </div>
+      <result :rates="rates"/>
     </el-card>
   </div>
 </template>
