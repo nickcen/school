@@ -61,8 +61,11 @@ export default {
     console.log(myChart)
     // myChart.setOption(this.options)
 
-    web.list('2018-02-01', '2018-02-21', ( response ) => {
-      var dates = this.getDateArray('2018-02-01', '2018-02-21')
+    var today = moment()
+    var one_month_ago = moment().subtract(1, 'months')
+
+    web.list(one_month_ago.format("YYYY-MM-DD"), today.format("YYYY-MM-DD"), ( response ) => {
+      var dates = this.getDateArray(one_month_ago, today)
       
       var maths = {}
       var pinyins = {}
@@ -105,11 +108,11 @@ export default {
   },
   methods: {
     getDateArray (start, end) {
-      var arr = [], dt = moment(start);
+      var arr = [];
 
-      while (dt <= moment(end)) {
-        arr.push(dt.format("YYYY-MM-DD"));
-        dt.add(1, 'd');
+      while (start <= end) {
+        arr.push(start.format("YYYY-MM-DD"));
+        start.add(1, 'd');
       }
 
       return arr;
