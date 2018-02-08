@@ -15,7 +15,6 @@ export default{
     })
   },
   create (question, cb, fb) {
-    console.log(question)
     axios.post('/api/questions' ,{question: question})
     .then( (response) => {
       if (cb) {

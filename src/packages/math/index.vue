@@ -17,7 +17,7 @@
           </span>
         </el-col>
         <el-col :span="12">
-          <el-input ref="result" v-model="result" @keyup.enter.native="submit" :autofocus="true"></el-input>
+          <el-input ref="answer" v-model="answer" @keyup.enter.native="submit" :autofocus="true"></el-input>
         </el-col>
       </el-row>
     </el-card>
@@ -43,7 +43,7 @@ export default {
         operators: ['+'],
         amount: 4
       },
-      result: null,
+      answer: null,
       rates: {
         correct_rate: 0,
         wrong_rate: 0
@@ -53,10 +53,10 @@ export default {
   },
   methods: {
     submit () {
-      if (this.result) {
+      if (this.answer) {
         var result = Number(eval(this.expression.join('')))
         var is_correct = false
-        if (Number(this.result) === result) {
+        if (Number(this.answer) === result) {
           is_correct = true
           this.rates.correct_rate += 1
 
@@ -69,9 +69,9 @@ export default {
           this.$message.error('答错了')
         }
         var question = {
-          kind: 'math',
+          kind: 'math1',
           question: this.expression.join(' '),
-          answer: this.result,
+          answer: this.answer,
           result: result,
           is_correct: is_correct
         }
@@ -79,10 +79,10 @@ export default {
 
         if (is_correct) {
           this.generate()
-          this.result = null
+          this.answer = null
         }
       }
-      this.$refs['result'].focus()
+      this.$refs['answer'].focus()
     },
     generate () {
       var expression = []

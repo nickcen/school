@@ -12,8 +12,8 @@
       </div>
       <el-form :model="form" label-width="80px">
         <el-form-item>
-          <el-checkbox-group v-model="right">
-            <el-checkbox v-for="val in left" :label='val' :key="val"></el-checkbox>
+          <el-checkbox-group v-model="answer">
+            <el-checkbox v-for="val in questions" :label='val' :key="val"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item>
@@ -47,19 +47,19 @@ export default {
       },
       shengmus: ['b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 'g', 'k', 'h', 'j', 'q', 'x', 'zh', 'ch', 'sh', 'r', 'z', 'c', 's'],
       yunmus: ['a', 'o', 'e', 'i', 'u', 'ü', 'ai', 'ei', 'ui', 'ao', 'ou', 'iu', 'ie', 'üe', 'er', 'an', 'en', 'in', 'un', 'ün', 'ang', 'eng', 'ing', 'ong'],
-      left: [],
-      right: [],
+      questions: [],
+      result: [],
       answer: []
     }
   },
   methods: {
     submit () {
       var is_correct = false
-      var test = this.right.every( (char) => {
+      var test = this.result.every( (char) => {
         return this.answer.includes(char)
       })
 
-      if (test && this.answer.length === this.right.length) {
+      if (test && this.answer.length === this.result.length) {
         is_correct = true
         this.rates.correct_rate += 1
         this.$message({
@@ -72,36 +72,36 @@ export default {
       }
       
       var question = {
-        kind: 'pinyin',
-        question: this.left.join(' '),
-        answer: this.right.join(' '),
-        result: this.answer.join(' '),
+        kind: 'pinyin1',
+        question: this.questions.join(' '),
+        answer: this.answer.join(' '),
+        result: this.result.join(' '),
         is_correct: is_correct
       }
       web.create(question)
       if (is_correct) {
-        this.answer = []
         this.generate()
       }
     },
     generate () {
-      var left = []
+      var questions = []
+      this.result = []
       var chars = [].concat(this.shengmus).concat(this.yunmus)
 
       for (var i = 0; i < this.form.amount;) {
         var idx = Math.floor(Math.random() * chars.length)
         var char = chars[idx]
-        if (!left.includes(char)) {
-          left.push(char)
+        if (!questions.includes(char)) {
+          questions.push(char)
           i++
           if (this.yunmus.includes(char)) {
-            this.answer.push(char)
+            this.result.push(char)
           }
         }
       }
 
-      this.left = left
-      this.right = []
+      this.questions = questions
+      this.answer = []
     }
   },
   components: {
