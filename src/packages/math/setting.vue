@@ -9,7 +9,7 @@
         <el-input-number v-model="setting.amount"  :min="1" :max="10"></el-input-number>
       </el-form-item>
       <el-form-item label="运算符">
-        <el-checkbox-group v-model="setting.operators">
+        <el-checkbox-group v-model="setting.operators" :min="1">
           <el-checkbox border label="+">加法</el-checkbox>
           <el-checkbox border label="-">减法</el-checkbox>
         </el-checkbox-group>
