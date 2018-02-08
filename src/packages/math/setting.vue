@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="setting" label-width="120px">
+    <el-form :model="setting" label-width="80px">
       <el-form-item label="数字范围">
         <el-slider v-model="setting.ranges" range show-stops :max="20">
         </el-slider>
@@ -14,7 +14,9 @@
           <el-checkbox border label="-">减法</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <el-button type="primary" @click="submit">开始</el-button>
+      <el-form-item>
+        <el-button type="primary" @click="submit">出题</el-button>
+      </el-form-item>
     </el-form>
   </div>
 </template>

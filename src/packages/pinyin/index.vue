@@ -1,0 +1,104 @@
+<template>
+  <div>
+    <el-row>
+      <el-col :span="12">
+        <el-card>
+          <div slot="header" class="clearfix">
+            <span>难度</span>
+          </div>
+          <setting :setting="form" @submit="generate"/>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
+          <div slot="header" class="clearfix">
+            <span>成绩</span>
+          </div>
+          <result :rates="rates"/>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-card>
+      <div slot="header" class="clearfix">
+        <span>题目</span>
+      </div>
+      <el-form :model="form" label-width="80px" :inline="true">
+        <el-form-item>
+          <el-transfer :data="left" v-model="right" :titles="['声母', '韵母']">
+          </el-transfer>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submit">回答</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
+</template>
+
+<script>
+import setting from './setting'
+import result from '@/components/result'
+
+export default {
+  data () {
+    return {
+      form: {
+        amount: 5
+      },
+      rates: {
+        correct_rate: 0,
+        wrong_rate: 0
+      },
+      shengmus: ['b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 'g', 'k', 'h', 'j', 'q', 'x', 'zh', 'ch', 'sh', 'r', 'z', 'c', 's'],
+      yunmus: ['a', 'o', 'e', 'i', 'u', 'ü', 'ai', 'ei', 'ui', 'ao', 'ou', 'iu', 'ie', 'üe', 'er', 'an', 'en', 'in', 'un', 'ün', 'ang', 'eng', 'ing', 'ong'],
+      left: [],
+      right: [],
+      answer: []
+    }
+  },
+  methods: {
+    submit () {
+      var test = this.right.every( (char) => {
+        return this.answer.includes(char)
+      })
+
+      if (test && this.answer.length === this.right.length) {
+        this.$message({
+          message: '答对了',
+          type: 'success'
+        })
+        this.rates.correct_rate += 1
+        this.answer = []
+        this.generate()
+      } else {
+        this.rates.wrong_rate += 1
+        this.$message.error('答错了')
+      }
+    },
+    generate () {
+      var left = []
+      var chars = [].concat(this.shengmus).concat(this.yunmus)
+
+      for (var i = 0; i < this.form.amount;) {
+        var idx = Math.floor(Math.random() * chars.length)
+        var char = chars[idx]
+        if (!left.includes(char)) {
+          left.push(char)
+          i++
+          if (this.yunmus.includes(char)) {
+            this.answer.push(char)
+          }
+        }
+      }
+
+      this.left = left.map(function (c) {
+        return {key: c, value: c}
+      })
+      this.right = []
+    }
+  },
+  components: {
+    setting, result
+  }
+}
+</script>

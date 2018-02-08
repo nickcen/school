@@ -1,22 +1,45 @@
 <template>
-  <div class="hello">
-    <el-card class="box-card">
-      <setting :setting="form" @submit="generate"/>
-    </el-card>
+  <div>
+    <el-row>
+      <el-col :span="12">
+        <el-card>
+          <div slot="header" class="clearfix">
+            <span>难度</span>
+          </div>
+          <setting :setting="form" @submit="generate"/>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
+          <div slot="header" class="clearfix">
+            <span>成绩</span>
+          </div>
+          <result :rates="rates"/>
+        </el-card>
+      </el-col>
+    </el-row>
     <el-card>
-      <span style="font-size:30px">
-        {{ this.expression.join(' ') }}
-      </span>
+      <div slot="header" class="clearfix">
+        <span>题目</span>
+      </div>
+      <el-row>
+        <el-col :span="12">
+          <span style="font-size:30px">
+            {{ this.expression.join(' ') }} =
+          </span>
+        </el-col>
+        <el-col :span="12">
+          <el-input ref="result" v-model="result" @keyup.enter.native="submit" :autofocus="true"></el-input>
+        </el-col>
+      </el-row>
     </el-card>
-    <el-card>
-      <result :result="result" @submit="submit"/>
-    </el-card>
+    
   </div>
 </template>
 
 <script>
 import setting from './setting'
-import result from './result'
+import result from '@/components/result'
 
 export default {
   data () {
@@ -26,8 +49,8 @@ export default {
         operators: ['+'],
         amount: 4
       },
-      result: {
-        result: null,
+      result: null,
+      rates: {
         correct_rate: 0,
         wrong_rate: 0
       },
@@ -36,21 +59,22 @@ export default {
   },
   methods: {
     submit () {
-      if (this.result.result) {
+      if (this.result) {
         var result = Number(eval(this.expression.join('')))
-        if (Number(this.result.result) === result) {
+        if (Number(this.result) === result) {
           this.$message({
             message: '答对了',
             type: 'success'
           })
-          this.result.correct_rate += 1
+          this.rates.correct_rate += 1
           this.generate()
         } else {
-          this.result.wrong_rate += 1
+          this.rates.wrong_rate += 1
           this.$message.error('答错了')
         }
       }
-      this.result.result = null
+      this.$refs['result'].focus()
+      this.result = null
     },
     generate () {
       var expression = []
