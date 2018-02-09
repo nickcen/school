@@ -5,10 +5,17 @@
         <span>难度</span>
       </div>
       <el-form :model="setting" label-width="100px">
-        <el-form-item label="四五快读">
-          <el-checkbox-group v-model="setting.books" :min="1">
-            <el-checkbox border :label="1">第一册</el-checkbox>
-            <el-checkbox border :label="2">第二册</el-checkbox>
+        <el-form-item label="数字范围">
+          <el-slider v-model="setting.ranges" range show-stops :max="20">
+          </el-slider>
+        </el-form-item>
+        <el-form-item label="几个数字">
+          <el-input-number v-model="setting.amount"  :min="1" :max="10"></el-input-number>
+        </el-form-item>
+        <el-form-item label="运算符">
+          <el-checkbox-group v-model="setting.operators" :min="1">
+            <el-checkbox border label="+">加法</el-checkbox>
+            <el-checkbox border label="-">减法</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item>

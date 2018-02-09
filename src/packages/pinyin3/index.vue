@@ -17,22 +17,24 @@ export default {
   data () {
     return {
       setting: {
-        books: [1]
-      },
-      question: {
-        question: null,
-        answer: null
+        books: [1],
+        speak_amount: 3,
+        amount: 5
       },
       rates: {
         correct_rate: 0,
         wrong_rate: 0
-      }
+      },
+      question: {
+        questions: [],
+        answer: null  
+      },
+      result: null
     }
   },
   methods: {
     submit () {
       var is_correct = false
-
       if (this.question.answer === this.result) {
         is_correct = true
       }
@@ -57,21 +59,30 @@ export default {
       this.reset()
 
       var chars = []
-      var pys = []
 
       if (this.setting.books.includes(1)){
         chars = chars.concat(book.book1)
-        pys = pys.concat(book.book1_py)
       }
 
       if (this.setting.books.includes(2)){
         chars = chars.concat(book.book2)
-        pys = pys.concat(book.book2_py)
       }
 
-      var idx = Math.floor(Math.random() * chars.length)
-      this.question.question = chars[idx]
-      this.result = pys[idx]
+      var questions = []
+      for (var i = 0; i < this.setting.amount;) {
+        var char = this.pick_char(chars)
+        if (!questions.includes(char)) {
+          questions.push(char)
+          i++
+        }
+      }
+
+      var idx = Math.floor(Math.random() * questions.length)
+
+      this.question.questions = questions
+      this.result = questions[idx]
+
+      this.speak()
     },
     restart () {
       this.rates.correct_rate = 0
@@ -83,15 +94,32 @@ export default {
 
       this.result = null
     },
+    pick_char (chars) {
+      var idx = Math.floor(Math.random() * chars.length)
+      return chars[idx]
+    },
     save_question (is_correct) {
       var record = {
-        kind: 2,
-        question: this.question.question,
+        kind: 3,
+        question: this.question.questions.join(' '),
         answer: this.question.answer,
         result: this.result,
         is_correct: is_correct
       }
       web.create(record)
+    },
+    speak () {
+      var utterThis = new window.SpeechSynthesisUtterance();
+      utterThis.text = this.result
+      utterThis.lang = 'zh-cn'
+
+      var i = 0
+      var max_i = this.setting.speak_amount
+      var interval = setInterval(function() {
+        window.speechSynthesis.speak(utterThis);
+        i++;
+        if(i >= max_i) clearInterval(interval); 
+      }, 1500);
     }
   },
   components: {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <setting :setting="setting" @submit="generate"/>
+    <setting :setting="setting" @submit="generate" @restart="restart"/>
     <question :question="question" @submit="submit"/>
     <result :rates="rates"/>
   </div>
@@ -11,18 +11,20 @@ import setting from './setting'
 import question from './question'
 import result from '@/components/result'
 import web from '@/web'
-import book from '@/book'
 
 export default {
   data () {
     return {
       setting: {
-        books: [1]
+        ranges: [1, 10],
+        operators: ['+'],
+        amount: 4
       },
       question: {
-        question: null,
+        questions: [],
         answer: null
       },
+      result: null,
       rates: {
         correct_rate: 0,
         wrong_rate: 0
@@ -56,26 +58,29 @@ export default {
     generate () {
       this.reset()
 
-      var chars = []
-      var pys = []
-
-      if (this.setting.books.includes(1)){
-        chars = chars.concat(book.book1)
-        pys = pys.concat(book.book1_py)
+      var questions = []
+      
+      for (var i = 0; i < this.setting.amount; i++) {
+        if (i !== 0) {
+          questions.push(this.pick_operator())
+        }
+        questions.push(this.pick_number())
       }
 
-      if (this.setting.books.includes(2)){
-        chars = chars.concat(book.book2)
-        pys = pys.concat(book.book2_py)
-      }
-
-      var idx = Math.floor(Math.random() * chars.length)
-      this.question.question = chars[idx]
-      this.result = pys[idx]
+      this.question.questions = questions
+      this.result = Number(eval(this.question.questions.join('')))
     },
     restart () {
       this.rates.correct_rate = 0
       this.rates.wrong_rate = 0
+    },
+    pick_operator () {
+      var opMax = this.setting.operators.length
+      return this.setting.operators[Math.floor(Math.random() * opMax)]
+    },
+    pick_number () {
+      var [min, max] = this.setting.ranges
+      return Math.floor(Math.random() * (max - min) + min)
     },
     reset() {
       this.question.questions = []
@@ -85,8 +90,8 @@ export default {
     },
     save_question (is_correct) {
       var record = {
-        kind: 2,
-        question: this.question.question,
+        kind: 0,
+        question: this.question.questions.join(' '),
         answer: this.question.answer,
         result: this.result,
         is_correct: is_correct

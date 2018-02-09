@@ -2,9 +2,10 @@
 
 import Vue from 'vue'
 import Router from 'vue-router'
-import math from '@/packages/math/index'
-import pinyin from '@/packages/pinyin/index'
+import math1 from '@/packages/math1/index'
+import pinyin1 from '@/packages/pinyin1/index'
 import pinyin2 from '@/packages/pinyin2/index'
+import pinyin3 from '@/packages/pinyin3/index'
 import chart from '@/packages/chart/index'
 import report from '@/packages/report/index'
 
@@ -13,13 +14,16 @@ Vue.use(Router)
 export default new Router({
   routes: [
   {
-    path: '/', component: math
+    path: '/', component: math1
   },
   {
-    path: '/pinyin', component: pinyin
+    path: '/pinyin1', component: pinyin1
   },
   {
     path: '/pinyin2', component: pinyin2
+  },
+  {
+    path: '/pinyin3', component: pinyin3
   },
   {
     path: '/chart', component: chart
