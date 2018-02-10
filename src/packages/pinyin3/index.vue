@@ -113,6 +113,7 @@ export default {
       utterThis.text = this.result
       utterThis.lang = 'zh-cn'
 
+      window.speechSynthesis.speak(utterThis);
       var i = 0
       var max_i = this.setting.speak_amount
       var interval = setInterval(function() {
