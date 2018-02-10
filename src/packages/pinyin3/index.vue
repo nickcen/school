@@ -115,7 +115,7 @@ export default {
 
       window.speechSynthesis.speak(utterThis);
       var i = 0
-      var max_i = this.setting.speak_amount
+      var max_i = this.setting.speak_amount - 1
       var interval = setInterval(function() {
         window.speechSynthesis.speak(utterThis);
         i++;

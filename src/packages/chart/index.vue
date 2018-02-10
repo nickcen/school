@@ -3,6 +3,7 @@
     <div id="chart0" style="width:640px;height:480px"/>
     <div id="chart1" style="width:640px;height:480px"/>
     <div id="chart2" style="width:640px;height:480px"/>
+    <div id="chart3" style="width:640px;height:480px"/>
   </div>
 </template>
 
@@ -91,6 +92,29 @@ export default {
         },
         smooth: true
       }]
+    },
+    {
+      title: {
+        text: '选生字'
+      },
+      xAxis: {
+        type: 'category',
+        data: []
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [{
+        data: [],
+        type: 'bar',
+        label: {
+          normal: {
+            show: true,
+            position: 'top'
+          }
+        },
+        smooth: true
+      }]
     }
     ]
 
@@ -98,6 +122,7 @@ export default {
     chars[0] = this.$echarts.init(document.getElementById('chart0'), 'light')
     chars[1] = this.$echarts.init(document.getElementById('chart1'), 'light')
     chars[2] = this.$echarts.init(document.getElementById('chart2'), 'light')
+    chars[3] = this.$echarts.init(document.getElementById('chart3'), 'light')
 
     var tomorrow = moment().add(1, 'days')
     var one_month_ago = moment().subtract(14, 'days')
@@ -111,7 +136,7 @@ export default {
     web.list(params, ( response ) => {
       var dates = this.getDateArray(one_month_ago, tomorrow)
 
-      var datas = [{}, {}, {}]
+      var datas = [{}, {}, {}, {}]
 
       response.data.data.forEach( (value) => {
         var curr = datas[value.kind]
@@ -122,7 +147,7 @@ export default {
         }
       })
 
-      for (var i = 0; i < 3; i++){
+      for (var i = 0; i < 4; i++){
         dates.forEach( (date) => {
           var val = datas[i][date]
 

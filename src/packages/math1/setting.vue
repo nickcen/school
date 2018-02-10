@@ -10,7 +10,7 @@
           </el-slider>
         </el-form-item>
         <el-form-item label="几个数字">
-          <el-input-number v-model="setting.amount"  :min="1" :max="10"></el-input-number>
+          <el-input-number v-model="setting.amount"  :min="2" :max="10"></el-input-number>
         </el-form-item>
         <el-form-item label="运算符">
           <el-checkbox-group v-model="setting.operators" :min="1">

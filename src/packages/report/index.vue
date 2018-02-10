@@ -57,6 +57,23 @@
         </el-table>
       </template>
     </el-card>
+    <el-card>
+      <div slot="header" class="clearfix">
+        <span>选生字</span>
+      </div>
+      <template>
+        <el-table :data="pinyin3s" style="width: 100%" :row-class-name="tableRowClassName">
+          <el-table-column type="index" width="50">
+          </el-table-column>
+          <el-table-column prop="question" label="题目" width="180">
+          </el-table-column>
+          <el-table-column prop="answer" label="回答"  width="180">
+          </el-table-column>
+          <el-table-column prop="result" label="答案">
+          </el-table-column>
+        </el-table>
+      </template>
+    </el-card>
   </div>
 </template>
 
@@ -74,7 +91,8 @@ export default {
       },
       maths: [],
       pinyin1s: [],
-      pinyin2s: []
+      pinyin2s: [],
+      pinyin3s: []
     }
   },
   created () {
@@ -96,7 +114,7 @@ export default {
       }
 
       web.list(params, ( response ) => {
-        var datas = [[],[],[]]
+        var datas = [[],[],[],[]]
 
         response.data.data.forEach( (value) => {
           datas[value.kind].push(value)
@@ -105,6 +123,7 @@ export default {
         this.maths = datas[0]
         this.pinyin1s = datas[1]
         this.pinyin2s = datas[2]
+        this.pinyin3s = datas[3]
       })
     }
   },
