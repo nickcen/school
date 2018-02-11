@@ -17,7 +17,7 @@ export default {
   data () {
     return {
       setting: {
-        books: [1]
+        books: [1, 2]
       },
       question: {
         question: null,

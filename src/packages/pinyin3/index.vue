@@ -17,9 +17,9 @@ export default {
   data () {
     return {
       setting: {
-        books: [1],
+        books: [1, 2],
         speak_amount: 3,
-        amount: 5
+        amount: 6
       },
       rates: {
         correct_rate: 0,

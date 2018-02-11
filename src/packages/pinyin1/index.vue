@@ -17,7 +17,7 @@ export default {
   data () {
     return {
       setting: {
-        amount: 5
+        amount: 8
       },
       question: {
         questions: [],
