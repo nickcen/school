@@ -1,6 +1,6 @@
 <template>
   <div>
-    <setting :setting="setting" @submit="generate"/>
+    <setting :setting="setting" @submit="generate" @restart="restart"/>
     <question :question="question" @submit="submit"/>
     <result :rates="rates"/>
   </div>
@@ -43,6 +43,7 @@ export default {
 
       if (is_correct) {
         this.rates.correct_rate += 1
+        clearInterval(window.interval)
 
         this.$message({
           message: '答对了',
@@ -116,10 +117,10 @@ export default {
       window.speechSynthesis.speak(utterThis);
       var i = 0
       var max_i = this.setting.speak_amount - 1
-      var interval = setInterval(function() {
+      window.interval = setInterval(function() {
         window.speechSynthesis.speak(utterThis);
         i++;
-        if(i >= max_i) clearInterval(interval); 
+        if(i >= max_i) clearInterval(window.interval); 
       }, 1500);
     }
   },
