@@ -7,6 +7,7 @@
       <el-menu-item index="/pinyin3">选生字</el-menu-item>
       <el-menu-item index="/chart">图表</el-menu-item>
       <el-menu-item index="/report">报告</el-menu-item>
+      <el-menu-item index="/statics">积分</el-menu-item>
     </el-menu>
   </div>
 </template>

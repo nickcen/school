@@ -8,6 +8,7 @@ import pinyin2 from '@/packages/pinyin2/index'
 import pinyin3 from '@/packages/pinyin3/index'
 import chart from '@/packages/chart/index'
 import report from '@/packages/report/index'
+import statics from '@/packages/statics/index'
 
 Vue.use(Router)
 
@@ -30,6 +31,9 @@ export default new Router({
   },
   {
     path: '/report', component: report
+  },
+  {
+    path: '/statics', component: statics
   }
   ]
 })
