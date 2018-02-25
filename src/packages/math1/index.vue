@@ -18,7 +18,7 @@ export default {
       setting: {
         ranges: [1, 10],
         operators: ['+'],
-        amount: 4
+        amount: 3
       },
       question: {
         questions: [],
