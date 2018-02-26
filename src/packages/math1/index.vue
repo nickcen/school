@@ -16,7 +16,7 @@ export default {
   data () {
     return {
       setting: {
-        ranges: [1, 10],
+        ranges: [10, 20],
         operators: ['+'],
         amount: 3
       },
