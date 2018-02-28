@@ -52,7 +52,7 @@ export default {
       if(cellValue == 0){
         return '数学';
       }else if(cellValue == 1){
-        return '声母/韵母';
+        return '选韵母';
       }else if(cellValue == 2){
         return '写拼音';
       }else if(cellValue == 3){
