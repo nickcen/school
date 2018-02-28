@@ -6,79 +6,15 @@
       </div>
       <setting :form="form" @submit="load"/>
     </el-card>
-    <el-card>
-      <div slot="header" class="clearfix">
-        <span>数学</span>
-      </div>
-      <template>
-        <el-table :data="maths" style="width: 100%" :row-class-name="tableRowClassName">
-          <el-table-column type="index" width="50">
-          </el-table-column>
-          <el-table-column prop="question" label="题目" width="180">
-          </el-table-column>
-          <el-table-column prop="answer" label="回答"  width="180">
-          </el-table-column>
-          <el-table-column prop="result" label="答案">
-          </el-table-column>
-        </el-table>
-      </template>
-    </el-card>
-    <el-card>
-      <div slot="header" class="clearfix">
-        <span>声母，韵母</span>
-      </div>
-      <template>
-        <el-table :data="pinyin1s" style="width: 100%" :row-class-name="tableRowClassName">
-          <el-table-column type="index" width="50">
-          </el-table-column>
-          <el-table-column prop="question" label="题目" width="180">
-          </el-table-column>
-          <el-table-column prop="answer" label="回答"  width="180">
-          </el-table-column>
-          <el-table-column prop="result" label="答案">
-          </el-table-column>
-        </el-table>
-      </template>
-    </el-card>
-    <el-card>
-      <div slot="header" class="clearfix">
-        <span>写拼音</span>
-      </div>
-      <template>
-        <el-table :data="pinyin2s" style="width: 100%" :row-class-name="tableRowClassName">
-          <el-table-column type="index" width="50">
-          </el-table-column>
-          <el-table-column prop="question" label="题目" width="180">
-          </el-table-column>
-          <el-table-column prop="answer" label="回答"  width="180">
-          </el-table-column>
-          <el-table-column prop="result" label="答案">
-          </el-table-column>
-        </el-table>
-      </template>
-    </el-card>
-    <el-card>
-      <div slot="header" class="clearfix">
-        <span>选生字</span>
-      </div>
-      <template>
-        <el-table :data="pinyin3s" style="width: 100%" :row-class-name="tableRowClassName">
-          <el-table-column type="index" width="50">
-          </el-table-column>
-          <el-table-column prop="question" label="题目" width="180">
-          </el-table-column>
-          <el-table-column prop="answer" label="回答"  width="180">
-          </el-table-column>
-          <el-table-column prop="result" label="答案">
-          </el-table-column>
-        </el-table>
-      </template>
-    </el-card>
+    <div v-for="(ds, date) in datas">
+      <sheet :date="date" :maths="ds[0]" :pinyin1s="ds[1]" :pinyin2s="ds[2]" :pinyin3s="ds[3]"></sheet>
+    </div>
   </div>
 </template>
 
 <script>
 import setting from './setting'
+import sheet from './sheet'
 import web from '@/web'
 
 var moment = require('moment')
@@ -87,48 +23,47 @@ export default {
   data: function () {
     return {
       form: {
-        date: moment().format("YYYY-MM-DD")
+        date: [moment().format("YYYY-MM-DD"), moment().add(1, 'days').format("YYYY-MM-DD")]
       },
-      maths: [],
-      pinyin1s: [],
-      pinyin2s: [],
-      pinyin3s: []
+      datas: []
     }
   },
   created () {
     this.load()
   },
   methods: {
-    tableRowClassName ({row, rowIndex}) {
-      if (!row.is_correct){
-        return 'warning-row'
-      }
-    },
     load () {
-      var from_date = moment(this.form.date)
-      var to_date = from_date.clone().add(1, 'days')
+      var from_date = this.form.date[0]
+      var to_date = this.form.date[1]
 
       var params = {
-        from_date: from_date.format("YYYY-MM-DD"), 
-        to_date: to_date.format("YYYY-MM-DD")
+        from_date: from_date, 
+        to_date: to_date
       }
 
       web.list(params, ( response ) => {
-        var datas = [[],[],[],[]]
+        var datas = this.getDateArray(moment(from_date), moment(to_date))
 
         response.data.data.forEach( (value) => {
-          datas[value.kind].push(value)
+          datas[value.date][value.kind].push(value)
         })
 
-        this.maths = datas[0]
-        this.pinyin1s = datas[1]
-        this.pinyin2s = datas[2]
-        this.pinyin3s = datas[3]
+        this.datas = datas
       })
+    },
+    getDateArray (start, end) {
+      var arr = {};
+
+      while (start <= end) {
+        arr[start.format("YYYY-MM-DD")] = [[], [], [], []];
+        start.add(1, 'd');
+      }
+
+      return arr;
     }
   },
   components: {
-    setting
+    setting, sheet
   }
 }
 </script>

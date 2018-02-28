@@ -2,7 +2,7 @@
   <div>
     <el-form :model="form" label-width="80px">
       <el-form-item label="日期">
-        <el-date-picker v-model="form.date" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
+        <el-date-picker v-model="form.date" type="daterange" placeholder="选择日期" value-format="yyyy-MM-dd">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
