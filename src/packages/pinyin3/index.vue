@@ -20,7 +20,7 @@ export default {
       setting: {
         books: [1, 2],
         speak_amount: 3,
-        amount: 6
+        amount: 8
       },
       rates: {
         correct_rate: 0,

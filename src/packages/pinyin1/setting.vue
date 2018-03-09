@@ -6,7 +6,7 @@
       </div>
       <el-form :model="setting" label-width="100px">
         <el-form-item label="数量">
-          <el-slider v-model="setting.amount" show-stops :max="45">
+          <el-slider v-model="setting.amount" show-stops :min="8" :max="20">
           </el-slider>
         </el-form-item>
         <el-form-item>
