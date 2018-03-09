@@ -12,6 +12,7 @@ import question from './question'
 import result from '@/components/result'
 import web from '@/web'
 import book from '@/book'
+import utility from '../utility'
 
 export default {
   data () {
@@ -43,17 +44,21 @@ export default {
 
       if (is_correct) {
         this.rates.correct_rate += 1
-        clearInterval(window.interval)
 
         this.$message({
-          message: '答对了',
+          message: '得' + this.score() + '分',
           type: 'success'
         })
+
+        utility.speak('答对了，得' + this.score() + '分')
 
         this.generate()
       }else{
         this.rates.wrong_rate += 1
-        this.$message.error('答错了')
+        this.$message.error('继续加油')
+
+        utility.speak('继续加油')
+        utility.speak(this.result, this.setting.speak_amount)
       }
     },
     generate () {
@@ -83,7 +88,7 @@ export default {
       this.question.questions = questions
       this.result = questions[idx]
 
-      this.speak()
+      utility.speak(this.result, this.setting.speak_amount)
     },
     restart () {
       this.rates.correct_rate = 0
@@ -105,23 +110,13 @@ export default {
         question: this.question.questions.join(' '),
         answer: this.question.answer,
         result: this.result,
-        is_correct: is_correct
+        is_correct: is_correct,
+        score: this.score()
       }
       web.create(record)
     },
-    speak () {
-      var utterThis = new window.SpeechSynthesisUtterance();
-      utterThis.text = this.result
-      utterThis.lang = 'zh-cn'
-
-      window.speechSynthesis.speak(utterThis);
-      var i = 0
-      var max_i = this.setting.speak_amount - 1
-      window.interval = setInterval(function() {
-        window.speechSynthesis.speak(utterThis);
-        i++;
-        if(i >= max_i) clearInterval(window.interval); 
-      }, 1500);
+    score (){
+      return Math.floor((this.setting.amount) / 4)
     }
   },
   components: {

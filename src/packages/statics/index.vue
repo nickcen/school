@@ -1,6 +1,5 @@
 <template>
   <div>
-    <setting :setting="setting" @submit="generate"/>
     <el-card>
       <div slot="header" class="clearfix">
         <span>图表</span>
@@ -111,24 +110,8 @@ export default {
       return arr;
     },
     score (value) {
-      var weight = 0
-      switch (value.kind) 
-      {
-        case 0:
-        weight = this.setting.math1
-        break;
-        case 1:
-        weight = this.setting.pinyin1
-        break;
-        case 2:
-        weight = this.setting.pinyin2
-        break;
-        case 3:
-        weight = this.setting.pinyin3
-        break;
-        default:
-      }
-      return weight
+      console.log(value)
+      return value.score
     }
   },
   components: {

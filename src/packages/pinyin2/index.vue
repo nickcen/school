@@ -12,6 +12,7 @@ import question from './question'
 import result from '@/components/result'
 import web from '@/web'
 import book from '@/book'
+import utility from '../utility'
 
 export default {
   data () {
@@ -43,14 +44,16 @@ export default {
         this.rates.correct_rate += 1
 
         this.$message({
-          message: '答对了',
+          message: '得' + this.score() + '分',
           type: 'success'
         })
 
+        utility.speak('答对了，得' + this.score() + '分')
         this.generate()
       }else{
         this.rates.wrong_rate += 1
-        this.$message.error('答错了')
+        this.$message.error('继续加油')
+        utility.speak('继续加油')
       }
     },
     generate () {
@@ -89,9 +92,13 @@ export default {
         question: this.question.question,
         answer: this.question.answer,
         result: this.result,
-        is_correct: is_correct
+        is_correct: is_correct,
+        score: this.score()
       }
       web.create(record)
+    },
+    score (){
+      return 3
     }
   },
   components: {
