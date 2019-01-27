@@ -2,6 +2,7 @@
   <div>
     <el-menu router mode="horizontal">
       <el-menu-item index="/">数学</el-menu-item>
+      <el-menu-item index="/multi">乘法</el-menu-item>
       <el-menu-item index="/pinyin1">选韵母</el-menu-item>
       <el-menu-item index="/pinyin2">写拼音</el-menu-item>
       <el-menu-item index="/pinyin3">选生字</el-menu-item>

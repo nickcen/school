@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import math1 from '@/packages/math1/index'
+import math2 from '@/packages/math2/index'
 import pinyin1 from '@/packages/pinyin1/index'
 import pinyin2 from '@/packages/pinyin2/index'
 import pinyin3 from '@/packages/pinyin3/index'
@@ -16,6 +17,9 @@ export default new Router({
   routes: [
   {
     path: '/', component: math1
+  },
+  {
+    path: '/multi', component: math2
   },
   {
     path: '/pinyin1', component: pinyin1
