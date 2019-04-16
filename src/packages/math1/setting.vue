@@ -6,7 +6,7 @@
       </div>
       <el-form :model="setting" label-width="100px">
         <el-form-item label="数字范围">
-          <el-input-number v-model="setting.ranges" :min="5" :max="20"></el-input-number>
+          <el-input-number v-model="setting.ranges" :min="5" :max="100"></el-input-number>
         </el-form-item>
         <el-form-item label="几个数字">
           <el-input-number v-model="setting.amount" :min="2" :max="10"></el-input-number>

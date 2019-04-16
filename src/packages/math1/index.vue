@@ -17,7 +17,7 @@
     data () {
       return {
         setting: {
-          ranges: 20,
+          ranges: 100,
           operators: ['+'],
           amount: 2
         },

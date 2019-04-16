@@ -18,9 +18,9 @@ export default {
   data () {
     return {
       setting: {
-        books: [1, 2],
+        units: [1, 2, 3, 4],
         speak_amount: 3,
-        amount: 8
+        amount: 5
       },
       rates: {
         correct_rate: 0,
@@ -66,12 +66,9 @@ export default {
 
       var chars = []
 
-      if (this.setting.books.includes(1)){
-        chars = chars.concat(book.book1)
-      }
-
-      if (this.setting.books.includes(2)){
-        chars = chars.concat(book.book2)
+      for (var i = 0; i < this.setting.units; i++) {
+        var unit = this.setting.units[i]
+        chars = chars.concat(book.book_2[unit-1])
       }
 
       var questions = []
