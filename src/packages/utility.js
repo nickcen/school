@@ -1,5 +1,5 @@
 export default {
-  speak (msg, times = 1) {
+  speak (msg, times = 1, rate = 1) {
     if(window.interval){
       clearInterval(window.interval)  
     }
@@ -7,6 +7,7 @@ export default {
     var utterThis = new window.SpeechSynthesisUtterance();
     utterThis.text = msg
     utterThis.lang = 'zh-cn'
+    utterThis.rate = rate
 
     if(times > 1){
       var i = 0

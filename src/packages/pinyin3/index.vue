@@ -66,8 +66,9 @@ export default {
 
       var chars = []
 
-      for (var i = 0; i < this.setting.units; i++) {
+      for (var i = 0; i < this.setting.units.length; i++) {
         var unit = this.setting.units[i]
+
         chars = chars.concat(book.book_2[unit-1])
       }
 
@@ -85,7 +86,7 @@ export default {
       this.question.questions = questions
       this.result = questions[idx]
 
-      utility.speak(this.result, this.setting.speak_amount)
+      utility.speak(this.result, this.setting.speak_amount, 0.7)
     },
     restart () {
       this.rates.correct_rate = 0

@@ -15,7 +15,7 @@
         </el-form-item>
         <el-form-item label="语文书">
           <el-checkbox-group v-model="setting.units" :min="1">
-            <el-checkbox v-for="val in [1,2,3,4,5,6,7,8]" border :label="val">第{{val}}单元</el-checkbox>
+            <el-checkbox v-for="val in [1,2,3,4,5,6,7,8]" border :key="val" :label="val">第{{val}}单元</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item>
